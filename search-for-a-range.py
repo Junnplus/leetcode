@@ -5,7 +5,7 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        if target not in nums:
+        if target not in set(nums):
             return [-1, -1]
 
         def bs_low(nums, target):
