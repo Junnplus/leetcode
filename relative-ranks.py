@@ -6,9 +6,10 @@ class Solution(object):
         """
         RANK = ['Gold Medal', 'Silver Medal', 'Bronze Medal']
         sorted_nums = sorted(nums)
+        length = len(nums)
         ret = []
         for n in nums:
-            i = len(nums) - sorted_nums.index(n)
+            i = length - sorted_nums.index(n)
             if i <= 3:
                 ret.append(RANK[i - 1])
             else:
