@@ -12,17 +12,15 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-
-        def dfs(node):
-            if node is None:
-                return
-            node.left, node.right = node.right, node.left
-            if node.left is not None:
-                dfs(node.left)
-            if node.right is not None:
-                dfs(node.right)
-        dfs(root)
+        self.invert_tree(root)
         return root
+
+    def invert_tree(self, node):
+        if node is None:
+            return
+        node.left, node.right = node.right, node.left
+        self.invert_tree(node.left)
+        self.invert_tree(node.right)
 
 
 def test():
