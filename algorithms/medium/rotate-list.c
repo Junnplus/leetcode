@@ -15,28 +15,26 @@ struct ListNode* newNode(int val, struct ListNode *next) {
 }
 
 struct ListNode* rotateRight(struct ListNode* head, int k){
-    struct ListNode *cur;
-    if (head == NULL || head->next == NULL || k == 0)
-        return head;
-    cur = head;
+    struct ListNode *cur = head, *tmp;
     int len = 1;
-    while (cur->next != NULL) {
-        cur = cur->next;
-        len++;
-    }
-    if (k == len) {
+    if (head == NULL || head->next == NULL)
         return head;
-    }
-    cur->next = head;
-    k = len - k % len;
-
-    cur = head;
-    while (--k > 0) {
+    while (cur->next != NULL) {
+        len++;
         cur = cur->next;
     }
-    head = cur->next;
-    cur->next=NULL;
-    return head;
+    k = k % len;
+    if (k == 0)
+        return head;
+    k = len - k -1;
+    cur->next = head;
+    cur = head;
+    while (k-- > 0) {
+        cur = cur->next;
+    }
+    tmp = cur->next;
+    cur->next = NULL;
+    return tmp;
 }
 
 int main() {

@@ -15,7 +15,7 @@ class Solution(object):
         if root is None:
             return []
         root.d = 0
-        l = []
+        lst = []
 
         def bfs(root):
             import Queue
@@ -23,26 +23,25 @@ class Solution(object):
             q.put(root)
             while not q.empty():
                 e = q.get()
-                if e:
-                    try:
-                        l[e.d].append(e.val)
-                    except:
-                        l.append([e.val])
-                    if e.left:
-                        e.left.d = e.d + 1
-                    if e.right:
-                        e.right.d = e.d + 1
+                try:
+                    lst[e.d].append(e.val)
+                except Exception:
+                    lst.append([e.val])
+                if e.left:
+                    e.left.d = e.d + 1
                     q.put(e.left)
+                if e.right:
+                    e.right.d = e.d + 1
                     q.put(e.right)
         bfs(root)
-        return l
+        return lst
 
 
 def test():
     t = TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
     s = Solution()
-    l = s.levelOrder(t)
-    assert l == [[3], [9, 20], [15, 7]]
+    assert s.levelOrder(t) == [[3], [9, 20], [15, 7]]
+
 
 if __name__ == '__main__':
     test()

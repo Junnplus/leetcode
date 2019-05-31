@@ -12,37 +12,26 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        l = []
-        if root is None:
-            return []
-        root.d = 0
+        lst = []
 
-        def bfs(root):
-            import Queue
-            q = Queue.Queue()
-            q.put(root)
-            while not q.empty():
-                e = q.get()
-                if e:
-                    if e.d >= len(l):
-                        l.append([e.val])
-                    else:
-                        l[e.d].append(e.val)
-                    if e.left:
-                        e.left.d = e.d + 1
-                    if e.right:
-                        e.right.d = e.d + 1
-                    q.put(e.left)
-                    q.put(e.right)
-        bfs(root)
-        return l[::-1]
+        def dfs(root, deep):
+            if not root:
+                return
+            if len(lst) <= deep:
+                lst.append([])
+            lst[deep].append(root.val)
+            # print(root.val)
+            dfs(root.left, deep+1)
+            dfs(root.right, deep+1)
+        dfs(root, 0)
+        return lst[::-1]
 
 
 def test():
     t = TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
     s = Solution()
-    l = s.levelOrderBottom(t)
-    assert l[::-1] == [[3], [9, 20], [15, 7]]
+    assert s.levelOrderBottom(t) == [[3], [9, 20], [15, 7]]
+
 
 if __name__ == '__main__':
     test()
