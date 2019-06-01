@@ -19,38 +19,13 @@ struct TreeNode* newNode(int val, struct TreeNode *left, struct TreeNode *right)
     return node;
 }
 
-int findPath(struct TreeNode* root, struct TreeNode* o, struct TreeNode** path) {
-    if (root == NULL)
-        return 0;
-    *path++ = root;
-    if (root == o) {
-        *path = NULL;
-        return 1;
-    }
-    if (findPath(root->left, o, path) == 1)
-        return 1;
-    
-    if (findPath(root->right, o, path) == 1)
-        return 1;
-    *path-- = NULL;
-    return 0;
-}
 
 struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) {
-    struct TreeNode* p1[MAXLEN];
-    struct TreeNode* p2[MAXLEN];
-    findPath(root, p, p1);
-    findPath(root, q, p2);
-    struct TreeNode **c1 = p1, **c2= p2, *r = NULL;
-    while (*c1 != NULL && *c2 != NULL) {
-        printf("%d %d\n", (*c1)->val, (*c2)->val);
-        if (*c1 == *c2) {
-            r = *c1;
-        }
-        c1++;
-        c2++;
-    }
-    return r;
+    if (root == NULL || root == p || root == q) return root;
+    struct TreeNode *left, * right;
+    left = lowestCommonAncestor(root->left, p, q);
+    right = lowestCommonAncestor(root->right, p, q);
+    return left == NULL? right : right == NULL ? left : root;
 }
 
 int main() {
@@ -63,6 +38,6 @@ int main() {
     struct TreeNode *node6 = newNode(6, NULL, NULL);
     struct TreeNode *node5 = newNode(5, node6, node2);
     struct TreeNode *node3 = newNode(3, node5, node1);
-    root = lowestCommonAncestor(node3, node7, node4);
+    root = lowestCommonAncestor(node3, node6, node4);
     printf("%d\n", root->val);
 }
